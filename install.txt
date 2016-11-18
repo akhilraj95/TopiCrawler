@@ -1,0 +1,29 @@
+
+* @author  Akhil Raj Azhikodan
+* @version 1.0.0 19:NOV:2016
+* @github github.com/akhilraj95
+
+**************************************************************************************************
+NOTE :
+        To set up the project,
+          1: Install python, pip
+          2: Set up virtualenv
+          3: Install dependencies
+
+        Step 1: Set up python and pip (https://pip.pypa.io/en/stable/installing/)
+
+        Step 2: Set up virutalenv,
+                * Install virtualenv
+                    pip install virtualenv
+                * Start new virtualenv
+                    virtualenv TopiCrawlerEnv
+                    source TopiCrawlerEnv/bin/activate
+        Step 3: pip install -r requirements.txt
+
+**************************************************************************************************
+
+Dependencies :
+- python 2.x
+- pip
+- urllib2
+- beautifulsoup4
