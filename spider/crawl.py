@@ -43,7 +43,7 @@ def extract_content(soup):
     visible_texts = ''.join(ch for ch in visible_texts if ch.isalnum() or ch == ' ')
     return visible_texts
 
-def test(url):
+def scrape(url):
     source = fetch_source(url)
     soup = BeautifulSoup(source,"html.parser")
     hyperlinks = extract_hyperlink(soup)
