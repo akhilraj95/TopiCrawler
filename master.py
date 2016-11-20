@@ -29,8 +29,8 @@ def send_slave_hyperlink(HYPERLINK,PORT,HOST="localhost"):
     try:
         sock.connect((HOST, PORT))
         sock.sendall(HYPERLINK + "\n")
-        print "Sent:{}     {}".format(HOST,data)
-        data_recived = sock.recv(10000000)
+        print "Sent:{}     {}".format(HOST,HYPERLINK)
+        data_received = sock.recv(10000000)
         print "Received: {}".format(data_received)
     finally:
         sock.close()
