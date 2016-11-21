@@ -18,8 +18,9 @@ NOTE :
                 * Start new virtualenv
                     virtualenv TopiCrawlerEnv
                     source TopiCrawlerEnv/bin/activate
-        Step 3: pip install -r requirements.txt
-
+        Step 3:
+                * pip install -r requirements.txt
+                * sudo apt-get install python-tk
 **************************************************************************************************
 
 Dependencies :
