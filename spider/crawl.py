@@ -14,14 +14,18 @@ def fetch_source(url):
     return page
 
 
-def extract_hyperlink(soup):
+def extract_hyperlink(soup,url):
     "returns the list of hyperlinks from bs4 soup"
     links = soup.find_all('a')
     linklist = []
     for tag in links:
         link = tag.get('href',None)
         if link is not None:
-            linklist.append(link)
+            if link[0] != '#':
+                if link[0] != '/':
+                    linklist.append(link.encode("UTF-8"))
+                else:
+                    linklist.append(url+link.encode("UTF-8"))
     linklist = list(set(linklist))
     linklist = "_".join(linklist)
     return linklist
@@ -55,7 +59,7 @@ def score(content,keywords):
 def scrape(url,keywords):
     source = fetch_source(url)
     soup = BeautifulSoup(source,"html.parser")
-    hyperlinks = extract_hyperlink(soup)
+    hyperlinks = extract_hyperlink(soup,url)
     content = extract_content(soup)
     relavance_score = score(content,keywords)
     data = hyperlinks + "||" +str(relavance_score)+"||"+content
