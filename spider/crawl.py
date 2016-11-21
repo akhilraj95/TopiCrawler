@@ -8,9 +8,12 @@ def fetch_source(url):
     user_agent = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3'
     headers = { 'User-Agent' : user_agent }
     req = urllib2.Request(url, None, headers)
-    response = urllib2.urlopen(req)
-    page = response.read()
-    response.close()
+    try:
+        response = urllib2.urlopen(req)
+        page = response.read()
+        response.close()
+    except:
+        page = ""
     return page
 
 
@@ -58,9 +61,12 @@ def score(content,keywords):
 
 def scrape(url,keywords):
     source = fetch_source(url)
-    soup = BeautifulSoup(source,"html.parser")
-    hyperlinks = extract_hyperlink(soup,url)
-    content = extract_content(soup)
-    relavance_score = score(content,keywords)
-    data = hyperlinks + "||" +str(relavance_score)+"||"+content
+    if source != "":
+        soup = BeautifulSoup(source,"html.parser")
+        hyperlinks = extract_hyperlink(soup,url)
+        content = extract_content(soup)
+        relavance_score = score(content,keywords)
+        data = hyperlinks + "||" +str(relavance_score)+"||"+content
+    else:
+        data = "Invalid"
     return data
