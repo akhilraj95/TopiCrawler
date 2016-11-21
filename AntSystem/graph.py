@@ -12,11 +12,11 @@ def init(HYPERLINK):
     return G
 
 
-def add_page(HYPERLINK,PARENT,G):
+def add_page(HYPERLINKS,PARENT,G):
     """
         Adds the page to the graph.
     """
-    for i in HYPERLINK:
-        G.add(HYPERLINK)
-        G.add_edge(PARENT,HYPERLINK)
+    for hyperlink in HYPERLINKS:
+        G.add_node(hyperlink)
+        G.add_edge(PARENT,hyperlink)
     return G

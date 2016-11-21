@@ -6,6 +6,9 @@ def send_slave_hyperlink(HYPERLINK,KEYWORDS,PORT,HOST):
         On request of the master code,
             Sends : hyperlink to slave
             Returns: Data from slave
+
+        usage : send_slave_hyperlink(HYPERLINK,KEYWORDS,PORT,HOST)
+
     """
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
@@ -15,6 +18,8 @@ def send_slave_hyperlink(HYPERLINK,KEYWORDS,PORT,HOST):
         print "Sent:{}     {}".format(HOST,HYPERLINK)
         data_received = sock.recv(10000000)
         print "Received: {}".format(data_received)
+        if(data_received != "Invalid"):
+            return data_received
     finally:
         sock.close()
 

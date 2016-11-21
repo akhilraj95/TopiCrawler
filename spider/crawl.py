@@ -2,6 +2,8 @@ import urllib2
 from bs4 import BeautifulSoup
 from bs4 import Comment
 import string
+from urlparse import urlparse
+
 
 def fetch_source(url):
     "fetches the page content(html) from the given url"
@@ -28,9 +30,11 @@ def extract_hyperlink(soup,url):
                 if link[0] != '/':
                     linklist.append(link.encode("UTF-8"))
                 else:
-                    linklist.append(url+link.encode("UTF-8"))
+                    parsed_uri = urlparse(url)
+                    domain = '{uri.scheme}://{uri.netloc}'.format(uri=parsed_uri)
+                    linklist.append(domain+link.encode("UTF-8"))
     linklist = list(set(linklist))
-    linklist = "_".join(linklist)
+    linklist = "{}".join(linklist)
     return linklist
 
 def visible(element):
