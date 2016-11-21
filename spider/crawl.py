@@ -23,6 +23,7 @@ def extract_hyperlink(soup):
         if link is not None:
             linklist.append(link)
     linklist = list(set(linklist))
+    linklist = "_".join(linklist)
     return linklist
 
 def visible(element):
@@ -43,9 +44,19 @@ def extract_content(soup):
     visible_texts = ''.join(ch for ch in visible_texts if ch.isalnum() or ch == ' ')
     return visible_texts
 
-def scrape(url):
+def score(content,keywords):
+    """
+        score the content by its relavance to the keywords
+        content = HTML string after removing (style,javascript,head,title)
+        keywords = [] , list of keywords(string)
+    """
+    return 1.6 #testing value
+
+def scrape(url,keywords):
     source = fetch_source(url)
     soup = BeautifulSoup(source,"html.parser")
     hyperlinks = extract_hyperlink(soup)
     content = extract_content(soup)
-    return content
+    relavance_score = score(content,keywords)
+    data = hyperlinks + "||" +str(relavance_score)+"||"+content
+    return data
