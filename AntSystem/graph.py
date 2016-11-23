@@ -7,7 +7,7 @@ def init(HYPERLINK):
         makes the first node the seed page.
         returns the graph.
     """
-    G = nx.Graph()
+    G = nx.DiGraph()
     G.add_node(HYPERLINK)
     return G
 

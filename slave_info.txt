@@ -1,0 +1,4 @@
+localhost 1995
+localhost 7070
+localhost 8080
+localhost 6060
