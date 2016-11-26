@@ -68,6 +68,8 @@ def send_slave_hyperlink(HYPERLINK,KEYWORDS,PORT,HOST,slave):
             try:
                 score = data_received[1]
                 content = data_received[2]
+                with open("ouput.txt", "a") as myfile:
+                    myfile.write(content)
             except:
                 print("SOCKET_ERROR(hanled): DATA NOT OVERFLOW")
             for i in links:
