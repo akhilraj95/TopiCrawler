@@ -28,3 +28,6 @@ Dependencies :
 - pip
 - urllib2
 - beautifulsoup4
+- nltk
+- sklearn
+- scipy
