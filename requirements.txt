@@ -1,3 +1,7 @@
 beautifulsoup4
 networkx
 matplotlib
+nltk
+numpy
+scipy
+scikit-learn

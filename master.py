@@ -3,6 +3,7 @@ import sys
 from AntSystem import graph
 import Queue as Q
 import threading
+import re
 
 # q.put(10)
 # q.put(1)
@@ -11,6 +12,8 @@ import threading
 # 	print q.get(),
 
 PQUEUE = Q.PriorityQueue()
+CRAWLED_LIST = []
+CRAWL_DEPTH = 100
 
 #********************************************************************
 #      GLOBAL SLAVE AVAILABILITY INFORMATION
@@ -68,12 +71,14 @@ def send_slave_hyperlink(HYPERLINK,KEYWORDS,PORT,HOST,slave):
             try:
                 score = data_received[1]
                 content = data_received[2]
-                with open("ouput.txt", "a") as myfile:
-                    myfile.write(content)
+                re.sub(' +',' ',content)
+                with open("output.txt", "a") as myfile:
+                    myfile.write(content+"\n")
             except:
                 print("SOCKET_ERROR(hanled): DATA NOT OVERFLOW")
             for i in links:
-                PQUEUE.put((score,i))
+                if(i not in CRAWLED_LIST):
+                    PQUEUE.put((score,i))
     finally:
         sock.close()
         unblock_slave(slave)
@@ -116,13 +121,21 @@ def pQueue(G,SEEDPAGE,KEYWORDS):
     PQUEUE.put((1,SEEDPAGE))
 
     while 1:
+        if len(CRAWLED_LIST) > CRAWL_DEPTH:
+            break
         if not PQUEUE.empty():
             slave = get_free_slave()
             if len(slave)!=0:
                 hyperlink = PQUEUE.get()
+                CRAWLED_LIST.append(hyperlink)
                 t = slaveCallThread(hyperlink[1],KEYWORDS,slave[1],slave[0],slave)
+                t.daemon = True
                 t.start()
 
+def ant(G,SEEDPAGE,KEYWORDS):
+    """
+        Traversing the graph with ant
+    """
 
 
 #********************************************************
@@ -165,3 +178,5 @@ if __name__ == "__main__":
     #--------------------------------------------------
     #PriorityQueue Technique
     pQueue(GRAPH,SEEDPAGE,KEYWORDS)
+
+    print "\nCrawling done."

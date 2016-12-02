@@ -45,8 +45,7 @@ def extract_hyperlink(soup, url):
 
 def visible(element):
     "filter for extracting page's main content"
-    if element.parent.name in ['style', 'script', '[document]', 'head', 'title', 'a', 'h1', 'h2', 'h3', 'h4', 'h5',
-                               'h6']:
+    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
         return False
     elif isinstance(element, Comment):
         return False
@@ -66,6 +65,7 @@ def extract_content(soup):
     # visible_texts = visible_texts.replace('\n','')
     visible_texts = ''.join(ch for ch in visible_texts if ch.isalnum() or ch == ' ' or ch == '.')
     #print visible_texts
+    re.sub(' +',' ',visible_texts)
     return visible_texts
 
 
@@ -110,9 +110,9 @@ def score(content, keywords):
     keyword_length = len(keywords)
     k_present = wordCount(document, keywords, 1)
     k_exist_factor = float(k_present)/keyword_length
-    print('Count = ',keyword_length)
-    print('Present = ', k_present)
-    print("Exist factor =",k_exist_factor)
+    #print('Count = ',keyword_length)
+    #print('Present = ', k_present)
+    print "Exist factor = {}/{} = {}".format(k_present,keyword_length,k_exist_factor)
 
     document = ' '.join(document.strip().split('\n'))
     tokenizer = PunktSentenceTokenizer()
@@ -142,17 +142,16 @@ def score(content, keywords):
     lim = int(lim)
     print('Total=', len(ranked))
     print('Limit=', lim)
-    for i in range(0, lim):
-        t_rank_factor += ranked[i][0]
-    print('Text rank factor =', t_rank_factor)
+
     t_rank_freq = 0
     for i in range(0, lim):
         t_rank_freq+= wordCount(ranked[i][1],keywords,0)
     print('Text rank freq=', t_rank_freq)
 
     # EQUATION can be changed
-    final_score = k_exist_factor * t_rank_factor * t_rank_freq
+    final_score = k_exist_factor * t_rank_freq
     print('Final score =', final_score)
+    print('-------------------------------------------------------------')
     return final_score  # testing value
 
 
@@ -168,5 +167,8 @@ def scrape(url, keywords):
         data = "Invalid"
     return data
 
-
+print("initalizing slave ...")
+print("running sample scrape ... (wait till slave is ready before starting slave)")
 scrape("http://www.rogerebert.com/reviews/scarface-1983", ['cuban','tony','al','pacino','cocaine','say','hello','to','my','little','friend'])
+print("test success ...")
+print("<<< Slave Ready >>>")

@@ -1,4 +1,5 @@
 import SocketServer
+import sys
 from spider import crawl
 
 class CrawlNodeTCPHandler(SocketServer.BaseRequestHandler):
@@ -25,3 +26,6 @@ def start_slave(PORT,HOST):
     """
     server = SocketServer.TCPServer((HOST, PORT), CrawlNodeTCPHandler)
     server.serve_forever()
+
+if(len(sys.argv) == 3):
+    start_slave(int(sys.argv[1]),sys.argv[2])
